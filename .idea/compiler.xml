@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="parentheses_checker_solution" />
         <module name="parentheses_checker_start" />
+        <module name="parentheses_checker" />
       </profile>
     </annotationProcessing>
   </component>

@@ -1,35 +1,42 @@
+import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
 public class ParenthesesChecker {
 
+    private Stack<Character> unmatchedCharacters;
 
-//    Passes for empty string test
-    boolean checkParentheses(String String){
-        return String.isEmpty();
+    public ParenthesesChecker(){
+        unmatchedCharacters = new Stack<>();
     }
 
-    static boolean ispar(String x){
-    Stack<Character> stacksOfBrackets = new Stack<>();
-    for (int i =0; i < x.length(); i++){
-        if (x.charAt(i) == '('){
-            stacksOfBrackets.push(x.charAt(i));
-        } else if (x.charAt(i) == ')'){
+    public boolean checkParentheses(String testString) {
 
-           if(stacksOfBrackets.size() == 0)
-               return false;
-           else if(stacksOfBrackets.peek() != '(') {
-               return false;
-           } else {
-               stacksOfBrackets.pop();
-           }
+        List<Character> openingCharacters = Arrays.asList('(', '{', '[', '<');
+        List<Character> closingCharacters = Arrays.asList(')', '}', ']', '>');
 
-     }
-    }
-    if(stacksOfBrackets.size() == 0)
-        return true;
-    else
-        return false;
+        char[] brokenString = testString.toCharArray();
 
+        for (Character character : brokenString){
+            if (openingCharacters.contains(character)){
+                unmatchedCharacters.push(character);
+            }
+            else if (closingCharacters.contains(character)){
+
+                int indexToCheck = closingCharacters.indexOf(character);
+
+                char correspondingOpeningCharacter = openingCharacters.get(indexToCheck);
+
+                if (unmatchedCharacters.isEmpty() || !unmatchedCharacters.peek().equals(correspondingOpeningCharacter)) {
+                    return false;
+                }
+                else {
+                    unmatchedCharacters.pop();
+                }
+            }
+        }
+
+        return unmatchedCharacters.isEmpty();
     }
 
 }
